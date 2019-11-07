@@ -12,6 +12,10 @@ Clone the application to /var/www/html (in ubuntu) **OR** D:\xampp\htdocs\ (in w
 `> git clone https://github.com/saktib/CodeIgniterSampleProj.git`
 
 **Step2:**
+Create a database with name 'categories':
+`> CREATE DATABASE categories;`
+
+**Step3:**
 Change the local db server username & password only in this file:
 `> application/config/database.php`
 
