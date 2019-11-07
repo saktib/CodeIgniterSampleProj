@@ -19,6 +19,6 @@ Create a database with name 'categories':
 Change the local db server username & password only in this file:
 `> application/config/database.php`
 
-**Step3:**
+**Step4:**
 Open browser & run this URL to start:
 `http://127.0.0.1/CodeIgniterSampleProj/index.php/migrate/`
