@@ -5,7 +5,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
     <meta charset="utf-8">
     <title>Category View</title>
+    <!-- Script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type='text/javascript'>
+        function categoryChange(selectedCategory) {
+            var cat_id = selectedCategory[selectedCategory.selectedIndex].value;
+            var par_id = selectedCategory[selectedCategory.selectedIndex].id;
 
+            if (cat_id != "") {
+                // AJAX request
+                $.ajax({
+                    url: 'category/getChild/' + cat_id,
+                    method: 'get',
+                    dataType: 'json',
+                    success: function (response) {
+                        var length = response.length;
+                        if(length > 0){
+                            $("#no_sub").empty();
+                            $("#child_category_div_" + par_id).empty();
+                            $("#child_category_div_" + par_id).append("<select id=child_category_"+ par_id +" onchange='categoryChange(this)'>");
+                            for (var i = 0; i < length; i++) {
+                                var id = response[i]['id'];
+                                var parent_id = response[i]['parent_id'];
+                                var category_name = response[i]['category_name'];
+                                $("#child_category_"+ par_id).append("<option value='" + id + "' id='" + parent_id + "'>" + category_name + "</option>");
+
+                            }
+                            $("#child_category_div_" + par_id).append("</select>");
+
+                        }else{
+                            $("#no_sub").html('No more sub category available!');
+                        }
+
+                    }
+                });
+            }
+
+            if(par_id == ''){
+                $(".reset_class").empty();
+            }
+        }
+    </script>
     <style type="text/css">
 
         ::selection { background-color: #E13300; color: white; }
@@ -71,12 +111,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <h1>Category View</h1>
 
     <div id="body">
-        <select>
-            <option value="">Select Category</option>
+        <select id='master_category' onchange="categoryChange(this)">
             <?php foreach ($masterCategories as $masterCategory): ?>
-                <option value="<?php $masterCategory->id ?>"><?php echo $masterCategory->category_name ?></option>
+                <option value="<?php echo $masterCategory->id; ?>" id="<?php echo $masterCategory->parent_id; ?>"><?php echo $masterCategory->category_name; ?></option>
             <?php endforeach;?>
         </select>
+
+        <?php foreach ($distinctCategories as $distinctCategory): ?>
+            <div id="child_category_div_<?php echo $distinctCategory->parent_id; ?>" class="reset_class"></div>
+        <?php endforeach;?>
+        <div id="no_sub"></div>
     </div>
 
     <p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
