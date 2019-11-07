@@ -12,7 +12,7 @@ Clone the application to /var/www/html (in ubuntu) **OR** D:\xampp\htdocs\ (in w
 `> git clone https://github.com/saktib/CodeIgniterSampleProj.git`
 
 **Step2:**
-Change your local database username & password in this file:
+Change the local db server username & password only in this file:
 `> application/config/database.php`
 
 **Step3:**
