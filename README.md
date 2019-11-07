@@ -17,4 +17,4 @@ Change the local db server username & password only in this file:
 
 **Step3:**
 Open browser & run this URL to start:
-`http://10.16.62.90/CodeIgniterSampleProj/index.php/migrate/`
+`http://127.0.0.1/CodeIgniterSampleProj/index.php/migrate/`
